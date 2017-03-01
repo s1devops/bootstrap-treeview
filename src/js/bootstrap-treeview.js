@@ -442,8 +442,26 @@
 	};
 
 	Tree.prototype._sortNodes = function () {
-		return $.map(Object.keys(this._nodes).sort(), $.proxy(function (value, index) {
-		  return this._nodes[value];
+		// based on http://stackoverflow.com/a/16187766/3108853
+		function logicalSort(a, b) {
+			var i, diff;
+			var segmentsA = a.split('.');
+			var segmentsB = b.split('.');
+
+			var minSegmentLen = Math.min(segmentsA.length, segmentsB.length);
+
+			for(i = 0; i < minSegmentLen; i++){
+				diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+				if(diff !== 0) {
+					return diff;
+				}
+			}
+
+			return segmentsA.length - segmentsB.length;
+		}
+
+		return $.map(Object.keys(this._nodes).sort(logicalSort), $.proxy(function (value, index) {
+			return this._nodes[value];
 		}, this));
 	};
 
