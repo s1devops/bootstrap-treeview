@@ -445,15 +445,14 @@
 		// based on http://stackoverflow.com/a/16187766/3108853
 		function logicalSort(a, b) {
 			var i, diff;
-			var regExStrip0 = /(\.0+)+$/;
-			var segmentsA = a.replace(regExStrip0, '').split('.');
-			var segmentsB = b.replace(regExStrip0, '').split('.');
+			var segmentsA = a.split('.');
+			var segmentsB = b.split('.');
 
-			var len = Math.min(segmentsA.length, segmentsB.length);
+			var minSegmentLen = Math.min(segmentsA.length, segmentsB.length);
 
-			for(i = 0; i < length; i++){
+			for(i = 0; i < minSegmentLen; i++){
 				diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
-				if(diff) {
+				if(diff !== 0) {
 					return diff;
 				}
 			}
